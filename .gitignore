@@ -41,3 +41,15 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# 工具自動生成的檔案
+.agents/
+.claude/
+.windsurf/
+skills-lock.json
+
+# 備份檔
+*.bak
+
+# 本機暫存
+note.txt
