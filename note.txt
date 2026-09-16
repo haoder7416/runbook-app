@@ -1,0 +1,13 @@
+
+✅ Phase 1：本地能跑的最小全端 「蓋一棟能住人的房子（有水有電、能住)」
+⬜ Phase 2：容器化整個 app 「把房子模組化（變成可以搬遷、複製的組合屋）」
+⬜ Phase 3：CI/CD 「蓋一條自動生產線（按個鈕就自動蓋好一棟）」
+⬜ Phase 4：雲端部署 + IaC 「選一塊地、把生產線搬過去（雲端部署）」
+⬜ Phase 5：監控告警 「裝監視器 + 警報系統（出狀況立刻知道）」
+⬜ Phase 6：Runbook 閉環 「」 
+
+
+
+npx prisma studio
+
+docker compose up --build

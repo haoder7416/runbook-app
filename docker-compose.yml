@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16
+    container_name: runbook-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: runbook
+      POSTGRES_PASSWORD: runbook123
+      POSTGRES_DB: runbook
+    ports:
+      - "5432:5432"
+    volumes:
+      - runbook_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U runbook"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: runbook-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://runbook:runbook123@db:5432/runbook
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  runbook_pgdata:
