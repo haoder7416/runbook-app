@@ -27,13 +27,27 @@ export default function Home() {
   }
 
   useEffect(() => {
+    let cancelled = false;
+  
+    async function load() {
+      const res = await fetch("/api/runbooks");
+      const data = await res.json();
+      if (!cancelled) {
+        setRunbooks(data);
+      }
+    }
+  
     load();
+  
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-
+  
     await fetch("/api/runbooks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,9 +59,13 @@ export default function Home() {
           .filter(Boolean),
       }),
     });
-
+  
     setForm({ title: "", symptom: "", action: "", tags: "" });
-    await load();
+  
+    // 重新抓資料（原本是 await load()，現在自己抓）
+    const res = await fetch("/api/runbooks");
+    setRunbooks(await res.json());
+  
     setLoading(false);
   }
 
