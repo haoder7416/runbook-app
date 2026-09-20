@@ -9,3 +9,5 @@ export const prisma =
 
 if (process.env.NODE_ENV !== "production")
   globalForPrisma.prisma = prisma;
+
+const x: number = "這不是數字";  // 型別錯誤
