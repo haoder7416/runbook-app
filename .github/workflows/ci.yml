@@ -1,0 +1,36 @@
+name: CI
+
+# 什麼時候觸發：push 到 main，或對 main 發 PR
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 把程式碼抓下來
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 裝 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # 3. 裝依賴
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 產生 Prisma Client
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      # 5. Build（型別檢查 + 打包，會抓到錯誤）
+      - name: Build
+        run: npm run build
